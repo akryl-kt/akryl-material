@@ -7,9 +7,9 @@ import io.akryl.render
 import kotlin.browser.document
 
 class Application : Component() {
-    override fun render() = Text("Hello, World!")
+  override fun render() = Text("Hello, World!")
 }
 
 fun main() {
-    render(Application(), document.getElementById("app")!!)
+  render(Application(), document.getElementById("app")!!)
 }
