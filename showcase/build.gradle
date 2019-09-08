@@ -5,6 +5,7 @@ dependencies {
     compile project(':akryl-material')
     compile "org.jetbrains.kotlin:kotlin-stdlib-js"
     compile "io.akryl:akryl-core:0.+"
+    compile "io.akryl:akryl-router:0.+"
 }
 
 compileKotlin2Js {
@@ -14,23 +15,25 @@ compileKotlin2Js {
         moduleKind = "commonjs"
         main = "call"
     }
+
+    doLast {
+        copy {
+            from("$buildDir/classes/kotlin/main")
+            into("$buildDir/webpack")
+        }
+    }
 }
 
 kotlinFrontend {
     npm {
         dependency("react", "16.8.6")
         dependency("react-dom", "16.8.6")
+        dependency("react-router-dom", "5.0.1")
     }
 
     webpackBundle {
         bundleName = "main"
         contentPath = file("src/main/web")
-        proxyUrl = "http://localhost:8080"
     }
-}
-
-task copyJsToWebpack(type: Copy) {
-    from("$buildDir/kotlin-js-min/main")
-    into("$buildDir/webpack")
 }
 
