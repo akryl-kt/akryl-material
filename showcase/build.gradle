@@ -1,0 +1,36 @@
+apply plugin: "kotlin2js"
+apply plugin: "org.jetbrains.kotlin.frontend"
+
+dependencies {
+    compile project(':akryl-material')
+    compile "org.jetbrains.kotlin:kotlin-stdlib-js"
+    compile "io.akryl:akryl-core:0.+"
+}
+
+compileKotlin2Js {
+    kotlinOptions {
+        metaInfo = true
+        sourceMap = true
+        moduleKind = "commonjs"
+        main = "call"
+    }
+}
+
+kotlinFrontend {
+    npm {
+        dependency("react", "16.8.6")
+        dependency("react-dom", "16.8.6")
+    }
+
+    webpackBundle {
+        bundleName = "main"
+        contentPath = file("src/main/web")
+        proxyUrl = "http://localhost:8080"
+    }
+}
+
+task copyJsToWebpack(type: Copy) {
+    from("$buildDir/kotlin-js-min/main")
+    into("$buildDir/webpack")
+}
+
