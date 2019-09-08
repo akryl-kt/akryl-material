@@ -1,13 +1,16 @@
 package showcase
 
 import io.akryl.Component
-import io.akryl.html.Text
-import io.akryl.react.ReactNode
 import io.akryl.render
+import io.akryl.router.BrowserRouter
+import io.akryl.router.Route
 import kotlin.browser.document
 
 class Application : Component() {
-  override fun render() = Text("Hello, World!")
+  override fun render() = BrowserRouter(
+    Route(exact = true, path = "/", component = ::RootPage),
+    Route(path = "/buttons", component = ::ButtonsPage)
+  )
 }
 
 fun main() {
